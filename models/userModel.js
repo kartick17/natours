@@ -30,7 +30,8 @@ const userSchema = new mongoose.Schema({
             },
             message: 'Password and confirm password should be same!'
         }
-    }
+    },
+    passwordChangedAt: Date
 });
 
 userSchema.pre('save', async function (next) {
@@ -45,9 +46,21 @@ userSchema.pre('save', async function (next) {
     next();
 })
 
+// Match entered password and database passwor are equal or not on user login
 userSchema.methods.checkPassword = async (password, dbPassword) => {
     return await bcrypt.compare(password, dbPassword);
 }
+
+// Check if user changed password after jwt token generated
+userSchema.methods.changePasswordAfter = function (JWTIssuedTimestamp) {
+    if (this.passwordChangedAt) {
+        const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+        // console.log(JWTIssuedTimestamp, changedTimestamp);
+        return changedTimestamp > JWTIssuedTimestamp;
+    }
+    return false;
+}
+
 
 const User = mongoose.model('User', userSchema);
 
