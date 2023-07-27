@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -28,6 +29,7 @@ const userSchema = new mongoose.Schema({
     },
     confirmPassword: {
         type: String,
+        required: [true, 'Enter your confirm password'],
         validate: {
             // This only works on Create and Save
             validator: function (el) {
@@ -36,7 +38,9 @@ const userSchema = new mongoose.Schema({
             message: 'Password and confirm password should be same!'
         }
     },
-    passwordChangedAt: Date
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpries: Date
 });
 
 userSchema.pre('save', async function (next) {
@@ -48,6 +52,13 @@ userSchema.pre('save', async function (next) {
 
     // Delete passwordConfirm field
     this.confirmPassword = undefined;
+    next();
+})
+
+userSchema.pre('save', function (next) {
+    if (!this.isModified('password') || this.isNew) return next();
+
+    this.passwordChangedAt = Date.now() - 1000;
     next();
 })
 
@@ -64,6 +75,20 @@ userSchema.methods.changePasswordAfter = function (JWTIssuedTimestamp) {
         return changedTimestamp > JWTIssuedTimestamp;
     }
     return false;
+}
+
+// Generate token on forget password
+userSchema.methods.createPasswordResetToken = function () {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    this.passwordResetToken = crypto
+        .createHash('sha256')
+        .update(resetToken)
+        .digest('hex');
+
+    console.log(resetToken, this.passwordResetToken);
+    this.passwordResetExpries = Date.now() + 10 * 60 * 1000;
+    return resetToken;
 }
 
 
