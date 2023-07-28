@@ -40,7 +40,12 @@ const userSchema = new mongoose.Schema({
     },
     passwordChangedAt: Date,
     passwordResetToken: String,
-    passwordResetExpries: Date
+    passwordResetExpries: Date,
+    active: {
+        type: Boolean,
+        default: true,
+        select: false
+    }
 });
 
 // Convert user's original password to hash
@@ -61,6 +66,12 @@ userSchema.pre('save', function (next) {
     if (!this.isModified('password') || this.isNew) return next();
 
     this.passwordChangedAt = Date.now() - 1000;
+    next();
+})
+
+// Return those user whose active status are not false
+userSchema.pre(/^find/, function (next) {
+    this.find({ active: { $ne: false } });
     next();
 })
 
