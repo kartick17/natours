@@ -14,10 +14,23 @@ const jwtSign = id => jwt.sign({ id }, process.env.JWT_SECRET, {
 const createSendToken = (user, statusCode, res) => {
     // Create JWT token
     const token = jwtSign(user._id);
+    const cookieOptions = {
+        expires: new Date(Date.now() + 31 * 24 * 60 * 60),
+        httpOnly: true
+    }
+    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+    res.cookie('jwt', token, cookieOptions);
+
+    // Remove password from output
+    user.password = undefined;
 
     res.status(statusCode).json({
         status: 'success',
-        token
+        token,
+        data: {
+            user
+        }
     });
 }
 
@@ -29,17 +42,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     };
 
     const newUser = await User.create(req.body);
-
-    // Create JWT token
-    const token = jwtSign(newUser._id);
-
-    res.status(200).json({
-        status: 'success',
-        token,
-        data: {
-            newUser
-        }
-    });
+    createSendToken(newUser, 200, res);
 });
 
 exports.login = catchAsync(async (req, res, next) => {
