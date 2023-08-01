@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+// const User = require('./userModel');
 
 const tourSchema = new mongoose.Schema({
     name: {
@@ -99,6 +100,13 @@ const tourSchema = new mongoose.Schema({
             description: String,
             day: Number
         }
+    ],
+    guides: [
+        {
+            // Reference tours with guides by guide id
+            type: mongoose.Schema.ObjectId,
+            ref: 'User'
+        }
     ]
 },
     {
@@ -110,11 +118,20 @@ tourSchema.virtual('durationWeeks').get(function () {
     return this.duration / 7;
 })
 
-// Document Middleware: runs before and after .save() and .create()
+///////////// Document Middleware /////////////////
+// Middleware: runs before and after .save() and .create()
+
 tourSchema.pre('save', function (next) {
     this.slug = slugify(this.name, { lower: true });
     next();
 })
+
+// Get guides id from document and store all guides data into tour document
+// tourSchema.pre('save', async function (next) {
+//     const guidesPromice = this.guides.map(async id => await User.findById(id));
+//     this.guides = await Promise.all(guidesPromice);
+//     next();
+// })
 
 // tourSchema.pre('save', function(next) {
 //     console.log('Will save document...');
@@ -126,7 +143,8 @@ tourSchema.pre('save', function (next) {
 //     next();
 // })
 
-// Query Middleware
+///////////// Query Middleware /////////////////
+
 // tourSchema.pre('find', function() {
 tourSchema.pre(/^find/, function (next) {
     this.find({ secretTours: { $ne: true } });
@@ -135,16 +153,28 @@ tourSchema.pre(/^find/, function (next) {
     next();
 })
 
+// Populaing tour guides.(Replace guide id with guide data in tour documents)
+tourSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'guides',
+        select: '-__v -passwordChangedAt'
+    });
+    next();
+})
+
+// Return all tours excludes secret tours from find query
 tourSchema.post(/^find/, function (doc, next) {
     this.find({ secretTours: { $ne: true } });
     // console.log(`Query took ${Date.now() - this.start}ms`);
     next();
 })
 
-// Aggregate Middleware
+///////////// Aggregate Middleware /////////////////
+
+// Return all tours excludes secret tours from aggregate pipline query
 tourSchema.pre('aggregate', function (next) {
     this.pipeline().unshift({ $match: { secretTours: { $ne: true } } });
-    console.log(this.pipeline());
+    // console.log(this.pipeline());
     next()
 })
 
