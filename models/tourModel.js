@@ -110,12 +110,22 @@ const tourSchema = new mongoose.Schema({
     ]
 },
     {
+        // Show virtual properties in output (In JSON & Object)
         toJSON: { virtuals: true },
         toObject: { virtuals: true }
     });
 
+// Add virtual properties into document(But this is not added into database)
 tourSchema.virtual('durationWeeks').get(function () {
     return this.duration / 7;
+})
+
+// Virtual Populates(This propertie show in output but not added into database)
+// Connet two model by this model id and another model parent referencing(Foreign key) using virtual populates 
+tourSchema.virtual('reviews', {         // reviews - virtual field/propertie name
+    ref: 'Review',                      // Review - model name
+    foreignField: 'tour',               // Another model field name to be referenced(Review.tour)
+    localField: '_id'                   // This model field name to be referenced(Tour._id)
 })
 
 ///////////// Document Middleware /////////////////

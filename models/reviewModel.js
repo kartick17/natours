@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
     review: {
         type: String,
-        require: [true, 'Review can not be empty!']
+        required: [true, 'Review can not be empty!']
     },
     rating: {
         type: Number,
@@ -20,14 +20,34 @@ const reviewSchema = new mongoose.Schema({
         // References reviews with tour by tour id
         type: mongoose.Schema.ObjectId,
         ref: 'Tour',
-        require: [true, 'Review must be belong to a tour']
+        required: [true, 'Review must be belong to a tour']
     },
     user: {
         // References reviews with user by user id
         type: mongoose.Schema.ObjectId,
         ref: 'User',
-        require: [true, 'Review must be belong to a user']
+        required: [true, 'Review must be belong to a user']
     }
+})
+
+///////////// Query Middleware /////////////////
+
+// Populating reviews document. (Replace user and tours data with id)
+reviewSchema.pre(/^find/, function (next) {
+    // this.populate({
+    //     path: 'tour',
+    //     select: 'name'
+    // }).populate({
+    //     path: 'user',
+    //     select: 'name photo'
+    // })
+
+    this.populate({
+        path: 'user',
+        select: 'name photo'
+    })
+
+    next();
 })
 
 const Review = mongoose.model('Review', reviewSchema);
