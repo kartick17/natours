@@ -4,20 +4,22 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
+// This route are open for all
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.patch(
-    '/updatePassword',
-    authController.protect,
-    authController.updatePassword
-);
+// All the route after this middelware are protected. So this will protect all the route after this middleware
+router.use(authController.protect)
 
-router.patch('/updateMe', authController.protect, userController.updateMe);
-router.delete('/deleteMe', authController.protect, userController.deleteMe);
+router.patch('/updatePassword', authController.updatePassword)
+router.get('/me', userController.getMe, userController.getUser)
+router.patch('/updateMe', userController.updateMe);
+router.delete('/deleteMe', userController.deleteMe);
+
+// All the route after this are accessible only to admin
+router.use(authController.restrictTo('admin'));
 
 router.route('/')
     .get(userController.getAllUsers)

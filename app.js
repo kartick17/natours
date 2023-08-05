@@ -62,9 +62,9 @@ app.use((req, res, next) => {
 })
 
 // 2) ROUTES
-app.use('/api/v1/tours', tourRouter);
-app.use('/api/v1/users', userRouter);
-app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/tour', tourRouter);
+app.use('/api/v1/user', userRouter);
+app.use('/api/v1/review', reviewRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.url} on this server`, 404));
