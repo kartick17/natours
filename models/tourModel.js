@@ -113,7 +113,12 @@ const tourSchema = new mongoose.Schema({
         // Show virtual properties in output (In JSON & Object)
         toJSON: { virtuals: true },
         toObject: { virtuals: true }
-    });
+    }
+);
+
+// Add indexing for read performance
+tourSchema.index({ price: 1, ratingsAverage: -1 })
+tourSchema.index({ slug: -1 })
 
 // Add virtual properties into document(But this is not added into database)
 tourSchema.virtual('durationWeeks').get(function () {
