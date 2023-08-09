@@ -120,7 +120,7 @@ const tourSchema = new mongoose.Schema({
 // Add indexing for read performance
 tourSchema.index({ price: 1, ratingsAverage: -1 })
 tourSchema.index({ slug: -1 })
-tourSchema.index({ startLocation: 1 })
+tourSchema.index({ startLocation: '2dsphere' })
 
 // Add virtual properties into document(But this is not added into database)
 tourSchema.virtual('durationWeeks').get(function () {
@@ -189,11 +189,11 @@ tourSchema.post(/^find/, function (doc, next) {
 ///////////// Aggregate Middleware /////////////////
 
 // Return all tours excludes secret tours from aggregate pipline query
-tourSchema.pre('aggregate', function (next) {
-    this.pipeline().unshift({ $match: { secretTours: { $ne: true } } });
-    // console.log(this.pipeline());
-    next()
-})
+// tourSchema.pre('aggregate', function (next) {
+//     this.pipeline().unshift({ $match: { secretTours: { $ne: true } } });
+//     console.log(this.pipeline());
+//     next()
+// })
 
 
 const Tour = mongoose.model('Tour', tourSchema);
