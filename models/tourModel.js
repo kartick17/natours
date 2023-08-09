@@ -120,6 +120,7 @@ const tourSchema = new mongoose.Schema({
 // Add indexing for read performance
 tourSchema.index({ price: 1, ratingsAverage: -1 })
 tourSchema.index({ slug: -1 })
+tourSchema.index({ startLocation: 1 })
 
 // Add virtual properties into document(But this is not added into database)
 tourSchema.virtual('durationWeeks').get(function () {
