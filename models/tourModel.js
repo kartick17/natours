@@ -189,11 +189,13 @@ tourSchema.post(/^find/, function (doc, next) {
 ///////////// Aggregate Middleware /////////////////
 
 // Return all tours excludes secret tours from aggregate pipline query
-// tourSchema.pre('aggregate', function (next) {
-//     this.pipeline().unshift({ $match: { secretTours: { $ne: true } } });
-//     console.log(this.pipeline());
-//     next()
-// })
+tourSchema.pre('aggregate', function (next) {
+    if (!this.pipeline()[0].$geoNear) {
+        this.pipeline().unshift({ $match: { secretTours: { $ne: true } } });
+    }
+    console.log(this.pipeline());
+    next()
+})
 
 
 const Tour = mongoose.model('Tour', tourSchema);
