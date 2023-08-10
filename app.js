@@ -10,6 +10,7 @@ const hpp = require('hpp');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRouter');
 const globalErrorHandeler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -66,16 +67,9 @@ app.use((req, res, next) => {
 })
 
 // 2) ROUTES
-
-app.get('/', (req, res) => {
-    res.status(200).render('base', {
-        tour: 'The Forest Hiker',
-        user: 'Kartick'
-    })
-})
-
-app.use('/api/v1/tour', tourRouter);
+app.use('/', viewRouter);
 app.use('/api/v1/user', userRouter);
+app.use('/api/v1/tour', tourRouter);
 app.use('/api/v1/review', reviewRouter);
 
 app.all('*', (req, res, next) => {
