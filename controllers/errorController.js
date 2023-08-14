@@ -27,34 +27,57 @@ const handelJWTExpiredError = () => {
     return new AppError(message, 401);
 }
 
-const sendErrorDev = (err, res) => {
-    res.status(err.statusCode).json({
-        status: err.status,
-        error: err,
-        message: err.message,
-        // stack: err.stack
-    });
-}
-
-const sendErrorProd = (err, res) => {
-    // Operational, trusted error: send message to client
-    if (err.isOperational) {
-        res.status(err.statusCode).json({
+const sendErrorDev = (err, req, res) => {
+    if (req.originalUrl.startsWith('/api')) {
+        // API
+        return res.status(err.statusCode).json({
             status: err.status,
-            message: err.message
+            error: err,
+            message: err.message,
+            // stack: err.stack
         });
     }
-    // Programming or other unknown error: don,t show error details
-    else {
-        // 1) Log error
-        // console.error(err);
+    // Rendered Website
+    console.error(err);
+    return res.status(err.statusCode).render('error', {
+        title: 'Something went wrong!',
+        msg: err.message
+    })
+}
 
-        // 2) Send generic message
-        res.status(500).json({
+const sendErrorProd = (err, req, res) => {
+    // API
+    if (req.originalUrl.startsWith('/api')) {
+        // Operational, trusted error: send message to client
+        if (err.isOperational) {
+            return res.status(err.statusCode).json({
+                status: err.status,
+                message: err.message
+            });
+        }
+        // Programming or other unknown error: don,t show error details
+        // Send generic message
+        console.error(err);
+        return res.status(500).json({
             status: 'error',
             message: 'Something went wrong!!'
         });
     }
+
+    // Rendered website
+    if (err.isOperational) {
+        return res.status(err.statusCode).render('error', {
+            title: 'Something went wrong!',
+            msg: err.message
+        })
+    }
+    // Programming or other unknown error: don,t show error details
+    // Send generic message
+    console.error(err);
+    return res.status(500).render('error', {
+        title: 'Something went wrong!',
+        msg: 'Please try again later'
+    });
 }
 
 
@@ -63,16 +86,17 @@ module.exports = ((err, req, res, next) => {
     err.status = err.status || 'error';
 
     if (process.env.NODE_ENV === 'development') {
-        sendErrorDev(err, res);
+        sendErrorDev(err, req, res);
     }
     else if (process.env.NODE_ENV === 'production') {
         let error = { ...err };
+        error.message = err.message;
 
         if (error.kind === 'ObjectId') error = handeCastErrorDB(error);
         if (error.code === 11000) error = handelDuplicateFieldsErrorDB(error);
         if (error.errors) error = handelValidationErrorDB(error);
         if (error.name === 'JsonWebTokenError') error = handelJWTError();
         if (error.name === 'TokenExpiredError') error = handelJWTExpiredError();
-        sendErrorProd(error, res);
+        sendErrorProd(error, req, res);
     }
 });
