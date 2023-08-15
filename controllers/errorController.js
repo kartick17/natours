@@ -6,7 +6,7 @@ const handeCastErrorDB = err => {
 }
 
 const handelDuplicateFieldsErrorDB = err => {
-    const message = `Duplicate tour name: ${err.keyValue.name}`;
+    const message = `Duplicate ${Object.keys(err.keyValue)}: ${Object.values(err.keyValue)}`;
     return new AppError(message, 400);
 }
 
@@ -27,9 +27,25 @@ const handelJWTExpiredError = () => {
     return new AppError(message, 401);
 }
 
+// Send error via response
+const sendErrorMessage = (res, statusCode, status, message) => {
+    res.status(statusCode).json({
+        status,
+        message
+    });
+}
+
+// Show rendered error in web page
+const renderErrorMessage = (res, status, title, msg) => {
+    res.status(status).render('error', {
+        title,
+        msg
+    })
+}
+
 const sendErrorDev = (err, req, res) => {
     if (req.originalUrl.startsWith('/api')) {
-        // API
+        // 1) API
         return res.status(err.statusCode).json({
             status: err.status,
             error: err,
@@ -37,47 +53,34 @@ const sendErrorDev = (err, req, res) => {
             // stack: err.stack
         });
     }
-    // Rendered Website
+    // 2) Rendered Website
     console.error(err);
-    return res.status(err.statusCode).render('error', {
-        title: 'Something went wrong!',
-        msg: err.message
-    })
+    return renderErrorMessage(res, err.statusCode, 'Something went wrong!', err.message);
 }
 
 const sendErrorProd = (err, req, res) => {
-    // API
+    // 1) API
     if (req.originalUrl.startsWith('/api')) {
         // Operational, trusted error: send message to client
-        if (err.isOperational) {
-            return res.status(err.statusCode).json({
-                status: err.status,
-                message: err.message
-            });
-        }
+        if (err.isOperational)
+            return sendErrorMessage(res, err.statusCode, err.status, err.message);
+
         // Programming or other unknown error: don,t show error details
         // Send generic message
         console.error(err);
-        return res.status(500).json({
-            status: 'error',
-            message: 'Something went wrong!!'
-        });
+        return sendErrorMessage(res, 500, 'error', 'Something went wrong')
     }
 
-    // Rendered website
+    // 2) Rendered website
+    // Operational, trusted error: send message to client
     if (err.isOperational) {
-        return res.status(err.statusCode).render('error', {
-            title: 'Something went wrong!',
-            msg: err.message
-        })
+        return renderErrorMessage(res, err.statusCode, 'Something went wrong!', err.message);
     }
+
     // Programming or other unknown error: don,t show error details
     // Send generic message
     console.error(err);
-    return res.status(500).render('error', {
-        title: 'Something went wrong!',
-        msg: 'Please try again later'
-    });
+    return renderErrorMessage(res, 500, 'Something went wrong!', 'Please try again later!');
 }
 
 
