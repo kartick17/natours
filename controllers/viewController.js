@@ -42,3 +42,9 @@ exports.getLoginForm = catchAsync(async (req, res, next) => {
             title: 'Log into your account'
         })
 })
+
+exports.getUserAccount = (req, res) => {
+    res.status(200).render('account', {
+        title: 'User account'
+    })
+}
