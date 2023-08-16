@@ -38,7 +38,7 @@ if (userDataForm)
 if (updatePasswordForm)
     updatePasswordForm.addEventListener('submit', e => {
         e.preventDefault();
-        document.querySelector('.btn--save-password').innerHTML = 'Updating...';
+        document.querySelector('.btn--save-password').textContent = 'Updating...';
         const currentPassword = document.getElementById('password-current').value;
         const newPassword = document.getElementById('password').value;
         const confirmPassword = document.getElementById('password-confirm').value;
@@ -47,5 +47,5 @@ if (updatePasswordForm)
         document.getElementById('password-current').value = '';
         document.getElementById('password').value = '';
         document.getElementById('password-confirm').value = '';
-        document.querySelector('.btn--save-password').innerHTML = 'Save password';
+        document.querySelector('.btn--save-password').textContent = 'Save password';
     })
