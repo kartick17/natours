@@ -21,7 +21,7 @@ const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image'))
         cb(null, true);
     else
-        cb(new AppError('Not an image! Please upload noly image', 400));
+        cb(new AppError('Not an image! Please upload only image', 400));
 }
 
 const upload = multer({
@@ -31,13 +31,13 @@ const upload = multer({
 
 exports.uploadUserPhoto = upload.single('photo');
 
-exports.resizeUserPhoto = (req, res, next) => {
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
     if (!req.file) return next();
 
     req.file.filename = `users-${req.user.id}-${Date.now()}.jpeg`;
-    sharp(req.file.buffer).resize(500, 500).toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/img/users/${req.file.filename}`);
+    await sharp(req.file.buffer).resize(500, 500).toFormat('jpeg').jpeg({ quality: 90 }).toFile(`public/img/users/${req.file.filename}`);
     next();
-}
+})
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
