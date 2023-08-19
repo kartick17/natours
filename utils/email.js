@@ -2,19 +2,22 @@ const nodemailer = require('nodemailer');
 
 const sendEmail = async options => {
     // 1) Create a transporter
+    // Send mail using personal mail id
+    // const transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: 'karticksadhu0@gmail.com',
+    //         pass: 'ecuqynnpjplgulgk'
+    //     }
+    // });
+
+    // Send mail using mailtrap service
     const transporter = nodemailer.createTransport({
-        // host: process.env.EMAIL_HOST,
-        // port: process.env.EMAIL_PORT,
-        service: 'gmail',
-        // host: 'smtp.gmail.com',
-        // port: 587,
-        // secure: true,
-        // requireTLS: true,
+        host: process.env.E_H,
+        port: processE_P,
         auth: {
-            // user: process.env.EMAIL_USER,
-            // pass: process.env.EMAIL_PASS
-            user: 'karticksadhu0@gmail.com',
-            pass: 'ecuqynnpjplgulgk'
+            user: process.env.E_U,
+            pass: process.env.E_PW
         }
     });
 
