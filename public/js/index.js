@@ -2,6 +2,7 @@ import '@babel/polyfill'
 import { login, logout } from './login';
 import { displayMap } from './mapbox';
 import { updateSettings } from './updateSettings'
+import { resetPassword } from './resetPassword';
 
 // DOM Elements
 const mapBox = document.getElementById('map');
@@ -10,7 +11,7 @@ const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-settings');
 const choosePhoto = document.getElementById('photo');
-const resetPasswordForm = document.querySelector('.form-reset-password');
+const resetPasswordForm = document.querySelector('.form--reset-password');
 
 
 // Delegation
@@ -63,6 +64,10 @@ if (choosePhoto)
     })
 
 if (resetPasswordForm)
-    resetPasswordForm.addEventListener('submit', () => {
-        console.log('sumbit');
+    resetPasswordForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const token = document.URL.split('/')[4];
+        resetPassword(password, confirmPassword, token);
     })

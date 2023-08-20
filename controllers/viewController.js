@@ -67,3 +67,10 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
         user: updatedUser
     })
 })
+
+exports.resetPassword = (req, res) => {
+    res.status(200).render('resetPassword', {
+        title: 'Reset password',
+        token: req.params.token
+    })
+}
