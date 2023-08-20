@@ -10,6 +10,7 @@ const logoutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-settings');
 const choosePhoto = document.getElementById('photo');
+const resetPasswordForm = document.querySelector('.form-reset-password');
 
 
 // Delegation
@@ -59,4 +60,9 @@ if (choosePhoto)
     choosePhoto.addEventListener('change', () => {
         const photoName = document.getElementById('photo').files[0].name
         document.getElementById('label-photo').textContent = photoName;
+    })
+
+if (resetPasswordForm)
+    resetPasswordForm.addEventListener('submit', () => {
+        console.log('sumbit');
     })

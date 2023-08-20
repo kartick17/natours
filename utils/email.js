@@ -1,36 +1,60 @@
 const nodemailer = require('nodemailer');
+const pug = require('pug');
+const htmlToText = require('html-to-text');
 
-const sendEmail = async options => {
-    // 1) Create a transporter
-    // Send mail using personal mail id
-    // const transporter = nodemailer.createTransport({
-    //     service: 'gmail',
-    //     auth: {
-    //         user: 'karticksadhu0@gmail.com',
-    //         pass: 'ecuqynnpjplgulgk'
-    //     }
-    // });
-
-    // Send mail using mailtrap service
-    const transporter = nodemailer.createTransport({
-        host: process.env.E_H,
-        port: processE_P,
-        auth: {
-            user: process.env.E_U,
-            pass: process.env.E_PW
-        }
-    });
-
-    // 2) Define the email options
-    const mailOptions = {
-        from: 'Kartick Sadhu <hello@kartick.in>',
-        to: options.email,
-        subject: options.subject,
-        text: options.message,
-        // html:
+module.exports = class Email {
+    constructor(user, url) {
+        this.to = user.email;
+        this.firstName = user.name.split(' ')[0];
+        this.url = url;
+        this.from = `Kartick Sadhu <${process.env.EMAIL_FROM}>`;
     }
 
-    // 3) Actually send the email
-    await transporter.sendMail(mailOptions)
+    newTransport() {
+        if (process.env.NODE_ENV === 'production') {
+            // Sendgrid
+            return 1;
+        }
+
+        // 1) Create a transporter
+        return nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            auth: {
+                user: process.env.EMAIL_USERNAME,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        });
+    }
+
+    // Send the actual mail
+    async send(template, subject) {
+        // 1) Render HTML based on a pug template
+        const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+            firstName: this.firstName,
+            url: this.url,
+            subject
+        });
+
+        // 2) Define the email options
+        const mailOptions = {
+            from: this.from,
+            to: this.to,
+            subject,
+            html,
+            text: htmlToText.convert(html)
+        }
+
+        // 3) Create a transport and send mail
+        await this.newTransport().sendMail(mailOptions)
+    }
+
+    async sendWelcome() {
+        await this.send('welcome', 'Welcome to Natours Family!');
+    }
+
+    async sendPasswordReset() {
+        await this.send('resetPassword', 'Your password reset token (valid for 10 minutes!');
+    }
 }
-module.exports = sendEmail;
+
