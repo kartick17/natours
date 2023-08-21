@@ -12,6 +12,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const viewRouter = require('./routes/viewRouter');
+const bookingRouter = require('./routes/bookingRoutes')
 const globalErrorHandeler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -75,6 +76,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/tour', tourRouter);
 app.use('/api/v1/review', reviewRouter);
+app.use('/api/v1/booking', bookingRouter);
 
 app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${req.url} on this server`, 404));
