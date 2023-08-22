@@ -3,6 +3,8 @@ import { login, logout } from './login';
 import { displayMap } from './mapbox';
 import { updateSettings } from './updateSettings'
 import { resetPassword } from './resetPassword';
+import { bookTour } from './stripe';
+import { showAlert } from './alert';
 
 // DOM Elements
 const mapBox = document.getElementById('map');
@@ -12,6 +14,7 @@ const userDataForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-settings');
 const choosePhoto = document.getElementById('photo');
 const resetPasswordForm = document.querySelector('.form--reset-password');
+const bookTourBtn = document.getElementById('book-tour');
 
 
 // Delegation
@@ -70,4 +73,13 @@ if (resetPasswordForm)
         const confirmPassword = document.getElementById('confirmPassword').value;
         const token = document.URL.split('/')[4];
         resetPassword(password, confirmPassword, token);
+    })
+
+if (bookTourBtn)
+    bookTourBtn.addEventListener('click', e => {
+        // e.preventDefault();
+        // const tourId = bookTourBtn.dataset.tourid;
+        // console.log(tourId);
+        // bookTour(tourId)
+        showAlert('info', 'Booking tour features are in under development!')
     })
