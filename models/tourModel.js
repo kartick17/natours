@@ -165,7 +165,7 @@ tourSchema.pre('save', function (next) {
 // tourSchema.pre('find', function() {
 tourSchema.pre(/^find/, function (next) {
     this.find({ secretTours: { $ne: true } });
-    this.start = Date.now();
+    // this.start = Date.now();
     // console.log(this.start);
     next();
 })
@@ -193,7 +193,7 @@ tourSchema.pre('aggregate', function (next) {
     if (!this.pipeline()[0].$geoNear) {
         this.pipeline().unshift({ $match: { secretTours: { $ne: true } } });
     }
-    console.log(this.pipeline());
+    // console.log(this.pipeline());
     next()
 })
 

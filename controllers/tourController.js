@@ -29,7 +29,6 @@ exports.uploadTourPhoto = upload.fields([
 // upload.single('image')              // Upload single photo
 
 exports.resizeTourPhoto = catchAsync(async (req, res, next) => {
-    console.log(req.files);
     if (!req.files.imageCover || !req.files.images) return next();
 
     // 1) Cover Image
@@ -45,7 +44,6 @@ exports.resizeTourPhoto = catchAsync(async (req, res, next) => {
             req.body.images.push(filename);
         })
     )
-    console.log(req.body.images);
     next();
 })
 
@@ -56,7 +54,6 @@ exports.aliasTopTours = (req, res, next) => {
         sort: '-ratingsAverage,price',
         fields: 'name,price,ratingsAverage,summary,difficulty'
     }
-    console.log(req.query);
     next();
 }
 

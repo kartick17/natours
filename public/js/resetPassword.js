@@ -9,14 +9,13 @@ export const resetPassword = async (password, confirmPassword, token) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `http://127.0.0.1:3000/api/v1/user/resetPassword/${token}`,
+            url: `/api/v1/user/resetPassword/${token}`,
             data: {
                 password,
                 confirmPassword
             }
         })
 
-        console.log(res);
         if (res.data.status === 'success') {
             showAlert(res.data.status, 'Password updated successfully');
             window.setTimeout(() => {
