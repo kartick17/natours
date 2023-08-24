@@ -95,16 +95,17 @@ userSchema.methods.changePasswordAfter = function (JWTIssuedTimestamp) {
 
 // Generate token on forget password
 userSchema.methods.createPasswordResetToken = function () {
-    const resetToken = crypto.randomBytes(32).toString('hex');
+    // const resetToken = crypto.randomBytes(32).toString('hex');
 
-    this.passwordResetToken = crypto
-        .createHash('sha256')
-        .update(resetToken)
-        .digest('hex');
+    // this.passwordResetToken = crypto
+    //     .createHash('sha256')
+    //     .update(resetToken)
+    //     .digest('hex');
+    this.passwordResetToken = Math.round(Math.random() * 1000000);
 
-    console.log(resetToken, this.passwordResetToken);
+    console.log(this.passwordResetToken);
     this.passwordResetExpries = Date.now() + 1 * 60 * 1000;
-    return resetToken;
+    return this.passwordResetToken;
 }
 
 const User = mongoose.model('User', userSchema);
