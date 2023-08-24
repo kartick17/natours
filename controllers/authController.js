@@ -66,7 +66,6 @@ exports.login = catchAsync(async (req, res, next) => {
 
     // 3) If email and password are valid then send token
     createSendToken(user, 200, res);
-    console.log(user);
 })
 
 exports.logout = (req, res) => {
