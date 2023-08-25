@@ -25,7 +25,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
     res.status(200).set(
         'Content-Security-Policy',
-        "default-src 'self' https://*.mapbox.com ;"
+        "default-src * 'unsafe-inline' 'unsafe-eval' https://*.mapbox.com ;"
     )
         .render('tour', {
             title: `${tour.name} tour`,
