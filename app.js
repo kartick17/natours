@@ -19,6 +19,8 @@ const AppError = require('./utils/appError');
 
 const app = express();
 
+app.enable('trust proxy')
+
 app.use(cors({ origin: true, credentials: true }));
 
 app.use(function (req, res, next) {
