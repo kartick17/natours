@@ -36,8 +36,8 @@ block content
           form.form.form-user-data
             .form__group.form__photo-upload
               img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
-              input.form__upload(type='file', accept='image/*', id='photo', name='photo')
-              label#label-photo(for='photo') Choose new photo
+              //- input.form__upload(type='file', accept='image/*', id='photo', name='photo')
+              //- label#label-photo(for='photo') Choose new photo
             .form__group
               label.form__label(for='name') Name
               input#name.form__input(type='text', value=`${user.name}`, required, name='name')

@@ -45,7 +45,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
     const url = `${req.protocol}://${req.get('host')}/me`;
     console.log(url);
-    await new Email(newUser, url).sendWelcome();
+    // await new Email(newUser, url).sendWelcome();
 
     createSendToken(newUser, 200, res);
 });
@@ -177,7 +177,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     try {
         // 3) Send it to user's email
         const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
-        await new Email(user, resetURL).sendPasswordReset();
+        // await new Email(user, resetURL).sendPasswordReset();
 
         res.status(200).json({
             status: 'sucess',
