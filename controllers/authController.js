@@ -82,13 +82,14 @@ exports.logout = (req, res) => {
 exports.protect = catchAsync(async (req, res, next) => {
     // 1) Getting token and checkof it's there
     let token;
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-        token = req.headers.authorization.split(' ')[1];
-    }
-    else if (req.cookies.jwt) {
+    if (req.cookies.jwt) {
         token = req.cookies.jwt;
     }
-
+    else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+        token = req.headers.authorization.split(' ')[1];
+    }
+    // console.log(req.cookies.jwt, req.headers);
+    console.log(token);
     if (!token) {
         return next(
             new AppError('You are not logged in! Please login to get access!!', 401)
@@ -177,6 +178,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     try {
         // 3) Send it to user's email
         const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
+        console.log(resetURL);
         // await new Email(user, resetURL).sendPasswordReset();
 
         res.status(200).json({
@@ -207,6 +209,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
         passwordResetToken: hashedToken,
         passwordResetExpries: { $gt: Date.now() }
     })
+    console.log(user);
 
     // 2) If token has not expired, and there is user, set the new password
     if (!user)

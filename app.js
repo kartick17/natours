@@ -90,7 +90,7 @@ app.use('/api/v1/review', reviewRouter);
 app.use('/api/v1/booking', bookingRouter);
 
 app.all('*', (req, res, next) => {
-    next(new AppError(`Can't find ${req.url} on this server`, 404));
+    // next(new AppError(`Can't find ${req.url} on this server`, 404));
 })
 
 app.use(globalErrorHandeler);

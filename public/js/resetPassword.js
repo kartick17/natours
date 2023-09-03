@@ -9,14 +9,13 @@ export const resetPassword = async (password, confirmPassword, token) => {
     try {
         const res = await axios({
             method: 'PATCH',
-            url: `http://127.0.0.1:3000/api/v1/user/resetPassword/${token}`,
+            url: `/api/v1/user/resetPassword/${token}`,
             data: {
                 password,
                 confirmPassword
             }
         })
 
-        console.log(res);
         if (res.data.status === 'success') {
             showAlert(res.data.status, 'Password updated successfully');
             window.setTimeout(() => {
@@ -26,5 +25,27 @@ export const resetPassword = async (password, confirmPassword, token) => {
     }
     catch (err) {
         showAlert('error', err.response.data.message)
+    }
+}
+
+export const forgotPassword = async (email) => {
+    try {
+        const res = await axios({
+            method: 'POST',
+            url: '/api/v1/user/forgotPassword',
+            data: {
+                email
+            }
+        })
+
+        if (res.data.status === 'success') {
+            showAlert('success', 'Please check your email inbox for a link to complete the reset.')
+            window.setTimeout(() => {
+                location.assign('/login');
+            }, 5000)
+        }
+    }
+    catch (err) {
+        showAlert('error', err.response.data.message);
     }
 }

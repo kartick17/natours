@@ -1,21 +1,23 @@
 import '@babel/polyfill'
-import { login, logout } from './login';
-import { displayMap } from './mapbox';
-import { updateSettings } from './updateSettings'
-import { resetPassword } from './resetPassword';
-import { showAlert } from './alert';
 import { signup } from './signup';
+import { showAlert } from './alert';
+import { displayMap } from './mapbox';
+import { login, logout } from './login';
+import { forgotPassword, resetPassword } from './resetPassword';
+import { updateSettings } from './updateSettings'
 
 // DOM Elements
 const mapBox = document.getElementById('map');
+const choosePhoto = document.getElementById('photo');
+const bookTourBtn = document.getElementById('book-tour');
 const loginForm = document.querySelector('.form--login');
 const signupForm = document.querySelector('.form--signup');
 const logoutBtn = document.querySelector('.nav__el--logout');
+const forgotPasswordBtn = document.querySelector('.forgot_password');
 const userDataForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-settings');
-const choosePhoto = document.getElementById('photo');
 const resetPasswordForm = document.querySelector('.form--reset-password');
-const bookTourBtn = document.getElementById('book-tour');
+const forgotPasswordForm = document.querySelector('.form--forgot-password');
 
 
 // Delegation
@@ -93,4 +95,18 @@ if (bookTourBtn)
         // console.log(tourId);
         // bookTour(tourId)
         showAlert('info', 'Booking tour features are in under development!')
+    })
+
+if (forgotPasswordBtn)
+    forgotPasswordBtn.addEventListener('click', () => {
+        location.assign('/forgot-password');
+    })
+
+if (forgotPasswordForm)
+    forgotPasswordForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+
+        console.log(email);
+        forgotPassword(email);
     })
