@@ -1,60 +1,45 @@
-const nodemailer = require('nodemailer');
 const pug = require('pug');
-const htmlToText = require('html-to-text');
+// const nodemailer = require('nodemailer');
+// const htmlToText = require('html-to-text');
+const formData = require('form-data');
+const Mailgun = require('mailgun.js');
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({ username: 'api', key: process.env.MAILGUN_API_KEY });
 
 module.exports = class Email {
-    constructor(user, url) {
+    constructor(user, url, emailFrom) {
         this.to = user.email;
         this.firstName = user.name.split(' ')[0];
         this.url = url;
-        this.from = `Kartick Sadhu <${process.env.EMAIL_FROM}>`;
-    }
-
-    newTransport() {
-        if (process.env.NODE_ENV === 'production') {
-            // Sendgrid
-            return 1;
-        }
-
-        // 1) Create a transporter
-        return nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: process.env.EMAIL_PORT,
-            auth: {
-                user: process.env.EMAIL_USERNAME,
-                pass: process.env.EMAIL_PASSWORD
-            }
-        });
+        this.from = emailFrom || `Natours Support <${process.env.EMAIL_FROM}>`;
     }
 
     // Send the actual mail
-    async send(template, subject) {
-        // 1) Render HTML based on a pug template
+    send(template, subject) {
+        // Render HTML based on a pug template
         const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
             firstName: this.firstName,
             url: this.url,
             subject
         });
 
-        // 2) Define the email options
-        const mailOptions = {
+        // Send mail
+        mg.messages.create(process.env.MAILGUN_DOMAIN, {
             from: this.from,
-            to: this.to,
-            subject,
-            html,
-            text: htmlToText.convert(html)
-        }
-
-        // 3) Create a transport and send mail
-        await this.newTransport().sendMail(mailOptions)
+            to: ['bwubca19106@brainwareuniversity.ac.in'],
+            subject: subject,
+            html: html
+        })
+            .then(msg => console.log(msg)) // logs response data
+            .catch(err => console.log(err));
     }
 
-    async sendWelcome() {
-        await this.send('welcome', 'Welcome to Natours Family!');
+    sendWelcome() {
+        this.send('welcome', 'Welcome to Natours Family!');
     }
 
-    async sendPasswordReset() {
-        await this.send('resetPassword', 'Your password reset token (valid for 10 minutes!');
+    sendPasswordReset() {
+        this.send('resetPassword', 'Your password reset token (valid for 10 minutes!');
     }
 }
 
