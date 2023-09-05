@@ -13,7 +13,6 @@ const bookTourBtn = document.getElementById('book-tour');
 const loginForm = document.querySelector('.form--login');
 const signupForm = document.querySelector('.form--signup');
 const logoutBtn = document.querySelector('.nav__el--logout');
-const forgotPasswordBtn = document.querySelector('.forgot_password');
 const userDataForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-settings');
 const resetPasswordForm = document.querySelector('.form--reset-password');
@@ -95,11 +94,6 @@ if (bookTourBtn)
         // console.log(tourId);
         // bookTour(tourId)
         showAlert('info', 'Booking tour features are in under development!')
-    })
-
-if (forgotPasswordBtn)
-    forgotPasswordBtn.addEventListener('click', () => {
-        location.assign('/forgot-password');
     })
 
 if (forgotPasswordForm)

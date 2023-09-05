@@ -44,8 +44,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     const newUser = await User.create(req.body);
 
     const url = `${req.protocol}://${req.get('host')}/me`;
-    console.log(url);
-    // await new Email(newUser, url).sendWelcome();
+    const emailFrom = `The Natours Team <community@natours.>`
+    new Email(newUser, url, emailFrom).sendWelcome();
 
     createSendToken(newUser, 200, res);
 });
@@ -88,8 +88,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     else if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
     }
-    // console.log(req.cookies.jwt, req.headers);
-    console.log(token);
+
     if (!token) {
         return next(
             new AppError('You are not logged in! Please login to get access!!', 401)
@@ -184,7 +183,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     try {
         // 3) Send it to user's email
         const resetURL = `${req.protocol}://${req.get('host')}/reset-password/${resetToken}`;
-        console.log(resetURL);
         new Email(user, resetURL).sendPasswordReset();
 
         res.status(200).json({

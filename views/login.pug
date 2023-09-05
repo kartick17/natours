@@ -8,11 +8,12 @@ block content
         .form__group
           label.form__label(for='email') Email address
           input#email.form__input(type='email', placeholder='you@example.com', required)
-        .form__group.ma-bt-md
+        .form__group
           label.form__label(for='password') Password
           input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
-        .form__group.center
+        .form__group.space-between
+            a.redirect-link(href='/signup') Create an account?
+            a.redirect-link.left(href='/forgot-password') Forgot password?
+        .form__group.right
           button.btn.btn--green Login
-      .form__group.center
-        button.forgot_password Forgot password?
 
