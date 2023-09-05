@@ -30,7 +30,7 @@ module.exports = class Email {
             subject: subject,
             html: html
         })
-            .then(msg => console.log(msg)) // logs response data
+            // .then(msg => console.log(msg)) // logs response data
             .catch(err => console.log(err));
     }
 

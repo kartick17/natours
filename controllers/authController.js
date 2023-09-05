@@ -141,6 +141,7 @@ exports.isLoggedIn = async (req, res, next) => {
 
             // There is a logged in user
             res.locals.user = currentUser;
+            // res.locals.isAccess = false;
             return next();
         } catch (err) {
             return next();
@@ -148,6 +149,11 @@ exports.isLoggedIn = async (req, res, next) => {
     }
     next();
 }
+
+exports.isAccessAccount = catchAsync(async (req, res, next) => {
+    res.locals.isAccess = true;
+    next()
+})
 
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
@@ -182,7 +188,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
         new Email(user, resetURL).sendPasswordReset();
 
         res.status(200).json({
-            status: 'sucess',
+            status: 'success',
             message: 'Token send to email!'
         })
     }
