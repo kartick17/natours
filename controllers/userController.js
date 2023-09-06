@@ -5,17 +5,17 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-// const multerStorate = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'public/img/users')
-//     },
-//     filename: (req, file, cb) => {
-//         const ext = file.mimetype.split('/')[1];
-//         cb(null, `users-${req.user.id}-${Date.now()}.${ext}`);
-//     }
-// })
+const multerStorate = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/img/users')
+    },
+    filename: (req, file, cb) => {
+        const ext = file.mimetype.split('/')[1];
+        cb(null, `users-${req.user.id}-${Date.now()}.${ext}`);
+    }
+})
 
-const multerStorate = multer.memoryStorage();
+// const multerStorate = multer.memoryStorage();
 
 const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image'))
