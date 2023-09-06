@@ -1,10 +1,11 @@
 import '@babel/polyfill'
 import { signup } from './signup';
+import { bookTour } from './stripe';
 import { showAlert } from './alert';
 import { displayMap } from './mapbox';
 import { login, logout } from './login';
-import { forgotPassword, resetPassword } from './resetPassword';
 import { updateSettings } from './updateSettings'
+import { forgotPassword, resetPassword } from './resetPassword';
 
 // DOM Elements
 const mapBox = document.getElementById('map');
@@ -89,11 +90,9 @@ if (resetPasswordForm)
 
 if (bookTourBtn)
     bookTourBtn.addEventListener('click', e => {
-        // e.preventDefault();
-        // const tourId = bookTourBtn.dataset.tourid;
-        // console.log(tourId);
-        // bookTour(tourId)
-        showAlert('info', 'Booking tour features are in under development!')
+        e.preventDefault();
+        const tourId = bookTourBtn.dataset.tourid;
+        bookTour(tourId)
     })
 
 if (forgotPasswordForm)

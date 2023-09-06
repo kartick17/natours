@@ -1,4 +1,4 @@
-const stripe = require('stripe')('sk_test_51NhCv2SDvLUZq2h7vUdbKe6ZJRMk8ZpJYof9X9SHwY31nDnte47ipUt3W2KWZ3uiFjmu6uEN46TzwXUDIilm8mbD00zTzTAZmn');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const Tour = require('../models/tourModel');
 const User = require('../models/userModel');
 const Booking = require('../models/bookingModel');
@@ -26,11 +26,11 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
                     currency: 'inr',
                     product_data: {
                         name: `${tour.name} Tour`,
+                        images: [
+                            `https://www.natours.dev/img/tours/${tour.imageCover}`
+                        ],
                     },
-                    unit_amount: tour.price * 100,
-                    // images: [
-                    //     `https://www.natours.dev/img/tours/${tour.imageCover}`
-                    // ],
+                    unit_amount: tour.price * 10000,
                 },
                 quantity: 1,
             }

@@ -46,6 +46,7 @@ const renderErrorMessage = (res, status, title, msg) => {
 const sendErrorDev = (err, req, res) => {
     if (req.originalUrl.startsWith('/api')) {
         // 1) API
+        console.log(err);
         return res.status(err.statusCode).json({
             status: err.status,
             error: err,
