@@ -9,7 +9,7 @@ html
       title Natours | #{title}
       //- include _style
 
-    body  
+    body(data-alert=`${alert ? alert : ''}`)
       // HEADER
       include _header
         

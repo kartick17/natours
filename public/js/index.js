@@ -101,3 +101,6 @@ if (forgotPasswordForm)
         const email = document.getElementById('email').value;
         forgotPassword(email);
     })
+
+const alertMessage = document.querySelector('body').dataset.alert;
+if (alertMessage) showAlert('success', alertMessage);

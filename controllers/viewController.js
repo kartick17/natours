@@ -1,7 +1,16 @@
+const Booking = require('../models/bookingModel');
 const Tour = require('../models/tourModel');
 const User = require('../models/userModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+
+exports.alerts = (req, res, next) => {
+    const alert = req.query;
+    if (alert === 'booking')
+        res.locals.alert = 'Your booking was successful!';
+
+    next();
+}
 
 exports.getOverview = catchAsync(async (req, res, next) => {
     // 1) Get tour data from collection
@@ -27,6 +36,21 @@ exports.getTour = catchAsync(async (req, res, next) => {
         .render('tour', {
             title: `${tour.name} tour`,
             tour
+        })
+})
+
+exports.getMyTours = catchAsync(async (req, res, next) => {
+    // 1) Find all booking 
+    const booking = await Booking.findOne({ user: req.user.id });
+
+    // 2) Find tours with the return IDs
+    const tourIDs = booking.map(el => el.tour);
+    const tours = await Tour.findOne({ _id: { $in: tourIDs } })
+
+    res.status(200)
+        .render('overview', {
+            title: 'My tours',
+            tours
         })
 })
 

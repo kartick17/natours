@@ -9,13 +9,14 @@ const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+const AppError = require('./utils/appError');
 const tourRouter = require('./routes/tourRoutes');
+const viewRouter = require('./routes/viewRouter');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const viewRouter = require('./routes/viewRouter');
 const bookingRouter = require('./routes/bookingRoutes')
+const bookingCotroller = require('./controllers/bookingCotroller');
 const globalErrorHandeler = require('./controllers/errorController');
-const AppError = require('./utils/appError');
 
 const app = express();
 
@@ -36,7 +37,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Set security HTTP headers
+// Set security HTTP headers(Added https)
 // app.use(helmet());
 
 // Development logging
@@ -51,6 +52,8 @@ const limiter = rateLimit({
     message: 'Too many requests from this IP, please try again after an hour'
 });
 app.use('/api', limiter);
+
+app.post('/webhook-checkout', express.raw({ type: 'application/json' }), bookingCotroller.webhookCheckout)
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
