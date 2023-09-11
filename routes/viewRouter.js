@@ -10,7 +10,7 @@ router.use(authController.isLoggedIn)
 router.get('/', authController.isLoggedIn, viewController.getOverview)
 router.get('/tour/:slug', viewController.getTour)
 router.get('/me', authController.protect, viewController.getUserAccount)
-router.get('/my-tours', authController.protect, viewController.getMyTours)
+router.get('/my-tours', authController.protect, viewController.showAlert, viewController.getMyTours)
 
 router.use(authController.isAccessAccount)
 

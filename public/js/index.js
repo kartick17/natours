@@ -18,7 +18,7 @@ const userDataForm = document.querySelector('.form-user-data');
 const updatePasswordForm = document.querySelector('.form-user-settings');
 const resetPasswordForm = document.querySelector('.form--reset-password');
 const forgotPasswordForm = document.querySelector('.form--forgot-password');
-
+const alertMessage = document.querySelector('body').dataset.alert;
 
 // Delegation
 if (mapBox) {
@@ -102,5 +102,4 @@ if (forgotPasswordForm)
         forgotPassword(email);
     })
 
-const alertMessage = document.querySelector('body').dataset.alert;
 if (alertMessage) showAlert('success', alertMessage);
