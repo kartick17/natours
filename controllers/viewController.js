@@ -41,14 +41,13 @@ exports.getTour = catchAsync(async (req, res, next) => {
 
 exports.getMyTours = catchAsync(async (req, res, next) => {
     // 1) Find all booking 
-    const booking = await Booking.findOne({ user: req.user.id });
-    // console.log(booking);
+    const booking = await Booking.find({ user: req.user.id });
 
     // 2) Find tours with the return IDs
     let tours = [];
     if (booking) {
-        const tourIDs = booking.map(el => el.tour);
-        tours = await Tour.findOne({ _id: { $in: tourIDs } })
+        const tourIDs = booking.map(el => el.tour._id);
+        tours = await Tour.find({ _id: { $in: tourIDs } })
     }
 
     res.status(200)
