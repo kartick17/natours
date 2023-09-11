@@ -18,11 +18,6 @@ router.route('/best-5-economical')
     )
 
 router.route('/tour-stats').get(tourController.getTourStats)
-router.route('/monthly-plan/:year')
-    .get(
-        authController.protect,
-        authController.restrictTo('admin', 'lead-guide', 'guide'),
-        tourController.getMonthlyPlan)
 
 router.route('/tours-within/:distance/center/:latlng')
     .get(tourController.getToursWithin)
@@ -30,11 +25,20 @@ router.route('/tours-within/:distance/center/:latlng')
 router.route('/distances/:latlng')
     .get(tourController.getDistances)
 
+router.route('/monthly-plan/:year')
+    .get(
+        authController.protect,
+        authController.restrictTo('admin', 'lead-guide', 'guide'),
+        tourController.getMonthlyPlan)
+
+
 router.route('/')
     .get(tourController.getAllTours)
     .post(
         authController.protect,
         authController.restrictTo('admin', 'lead-guide'),
+        tourController.uploadTourPhoto,
+        tourController.addTourPhoto,
         tourController.createTour
     )
 
@@ -44,7 +48,7 @@ router.route('/:id')
         authController.protect,
         authController.restrictTo('admin', 'lead-guide'),
         tourController.uploadTourPhoto,
-        tourController.resizeTourPhoto,
+        tourController.addTourPhoto,
         tourController.updateTour
     )
     .delete(

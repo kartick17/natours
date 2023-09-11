@@ -82,7 +82,7 @@ const tourSchema = new mongoose.Schema({
         // GeoJSON
         type: {
             type: String,
-            default: 'Point',
+            // default: 'Point',
             enum: ['Point']
         },
         coordinates: [Number],
@@ -93,7 +93,7 @@ const tourSchema = new mongoose.Schema({
         {
             type: {
                 type: String,
-                default: 'Point',
+                // default: 'Point',
                 enum: ['Point']
             },
             coordinates: [Number],
