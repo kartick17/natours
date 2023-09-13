@@ -71,6 +71,13 @@ exports.getSignupForm = (req, res) => {
         })
 }
 
+exports.addNewTour = (req, res) => {
+    res.status(200)
+        .render('manageTour', {
+            title: 'Create new tour'
+        })
+}
+
 exports.getUserAccount = (req, res) => {
     res.status(200).render('account', {
         title: 'Your account'

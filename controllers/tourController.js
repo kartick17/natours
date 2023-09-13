@@ -35,6 +35,7 @@ const multerS3Config = multerS3({
         cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
+        // console.log(file);
         multerFilter(req, file, cb);
         const ext = file.mimetype.split('/')[1];
         file.originalname = `tours-${Date.now()}.${ext}`
@@ -56,6 +57,8 @@ exports.uploadTourPhoto = upload.fields([
     { name: 'images', maxCount: 3 },
 ])
 
+// exports.uploadTourPhoto = upload.array('imageCover', 3)
+
 // upload.array('images', 5)           // Upload multiple photos but same field
 // upload.single('image')              // Upload single photo
 
@@ -63,9 +66,10 @@ exports.addTourPhoto = (req, res, next) => {
     req.body.imageCover = req.files.imageCover[0].location;
 
     req.body.images = [];
-    req.files.images.forEach(img => req.body.images.push(img.location));
+    if (req.files && req.files.images)
+        req.files.images.forEach(img => req.body.images.push(img.location));
 
-    console.log(req.body);
+    // console.log(req.body);
     next();
 }
 
