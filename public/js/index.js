@@ -115,7 +115,8 @@ if (createTourForm)
         e.preventDefault();
         const form = new FormData();
 
-        const date = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        const date1 = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+        const date2 = new Date(Date.now() + 75 * 24 * 60 * 60 * 1000)
         const startLocation = {};
         startLocation.description = document.getElementById('price').value;
         startLocation.address = document.getElementById('address').value;
@@ -123,6 +124,12 @@ if (createTourForm)
             +document.getElementById('lat').value,
             +document.getElementById('lng').value
         ]
+        let images = document.getElementById('images').files;
+        console.log(images);
+
+        for (const img in images) {
+            form.append('images', images[img]);
+        }
 
         form.append('name', document.getElementById('name').value)
         form.append('summary', document.getElementById('summary').value)
@@ -133,11 +140,8 @@ if (createTourForm)
         form.append('difficulty', document.getElementById('difficulty').value)
         form.append('startLocation', startLocation)
         form.append('imageCover', document.getElementById('imageCover').files[0])
-        form.append('images', document.getElementById('images').files[0])
-        form.append('images', document.getElementById('images').files[1])
-        form.append('images', document.getElementById('images').files[2])
-        form.append('startDates', date)
-        form.append('startDates', date)
+        form.append('startDates', date1)
+        form.append('startDates', date2)
 
         createTour(form);
     })

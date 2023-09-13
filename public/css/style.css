@@ -243,6 +243,11 @@ body {
 
 .btn--small {
   padding: 1.25rem 3rem !important;
+  font-size: 1.4rem !important;
+}
+
+.btn--large {
+  padding: 1.25rem 3rem !important;
   font-size: 1.8rem !important;
   font-weight: bold;
 }
@@ -1473,7 +1478,7 @@ use {
 
 input::file-selector-button {
   font-weight: bold;
-  background-color: rgb(113, 184, 255);
+  background-color:#60da88;;
   color: #fff;
   padding: 0.5em;
   border: none;

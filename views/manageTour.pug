@@ -40,7 +40,7 @@ block content
             .space-between 
               .form__group
                 label.form__label(for='imageCover') Cover image
-                input#imageCover.form__input(type='file', accept='image/*', required, name='imageCover', multiple)
+                input#imageCover.form__input(type='file', accept='image/*', required, name='imageCover')
               .form__group
                 label.form__label(for='images') Tour images(Should be 3)
                 input#images.form__input(type='file', accept='image/*', name='images', multiple) 
@@ -57,7 +57,7 @@ block content
               .form__group
                 label.form__label(for='address') Address 
                 input#address.form__input(type='text', required, name='address')
-              .form__group-sub
+              .space-between
                 .form__group
                   label.form__label(for='lat') Latitude
                   input#lat.form__input(type='text', required, name='lat')
@@ -66,4 +66,4 @@ block content
                   input#lng.form__input(type='text', required, name='lng')
               
             .form__group.right
-              button.btn.btn--small.btn--green.btn--create-tour Add Tour
+              button.btn.btn--large.btn--green.btn--create-tour Add Tour

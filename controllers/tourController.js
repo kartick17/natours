@@ -1,66 +1,14 @@
-const AWS = require('aws-sdk');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-
+const upload = require('../config/awsS3');
 const factory = require('./handlerFactory');
 const Tour = require('../models/tourModel');
-const catchAsync = require('./../utils/catchAsync');
 const AppError = require('../utils/appError');
-
-require('aws-sdk/lib/maintenance_mode_message').suppress = true;
-
-// AWS s3 configuration
-const s3Config = new AWS.S3({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    Bucket: process.env.AWS_BUCKET_NAME,
-    signatureVersion: 'v4',
-    region: process.env.AWS_REGION
-});
-
-// Check file is image
-const multerFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image')) {
-        cb(null, true);
-    }
-    else
-        cb(new AppError('Not an image! Please upload only image', 400));
-}
-
-// Create storage using s3-multer
-const multerS3Config = multerS3({
-    s3: s3Config,
-    bucket: 'natours-image',
-    metadata: function (req, file, cb) {
-        cb(null, { fieldName: file.fieldname });
-    },
-    key: function (req, file, cb) {
-        // console.log(file);
-        multerFilter(req, file, cb);
-        const ext = file.mimetype.split('/')[1];
-        file.originalname = `tours-${Date.now()}.${ext}`
-        cb(null, file.originalname)
-    }
-});
-
-// Upload file in s3 bucket
-const upload = multer({
-    storage: multerS3Config,
-    limits: {
-        fileSize: 1024 * 1024 * 1 // we are allowing only 1 MB files
-    }
-})
+const catchAsync = require('./../utils/catchAsync');
 
 // Upload multiple photos in multiple fields
 exports.uploadTourPhoto = upload.fields([
     { name: 'imageCover', maxCount: 1 },
     { name: 'images', maxCount: 3 },
 ])
-
-// exports.uploadTourPhoto = upload.array('imageCover', 3)
-
-// upload.array('images', 5)           // Upload multiple photos but same field
-// upload.single('image')              // Upload single photo
 
 exports.addTourPhoto = (req, res, next) => {
     req.body.imageCover = req.files.imageCover[0].location;
