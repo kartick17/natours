@@ -14,7 +14,7 @@ const tourRouter = require('./routes/tourRoutes');
 const viewRouter = require('./routes/viewRouter');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const bookingRouter = require('./routes/bookingRoutes')
+const bookingRouter = require('./routes/bookingRoutes');
 const bookingCotroller = require('./controllers/bookingCotroller');
 const globalErrorHandeler = require('./controllers/errorController');
 
@@ -42,22 +42,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
+  app.use(morgan('dev'));
 }
 
 // Limit request from same API
 const limiter = rateLimit({
-    max: 100,
-    windowMs: 60 * 60 * 1000,
-    message: 'Too many requests from this IP, please try again after an hour'
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again after an hour',
 });
 app.use('/api', limiter);
 
-app.post('/webhook-checkout', express.raw({ type: 'application/json' }), bookingCotroller.webhookCheckout)
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingCotroller.webhookCheckout,
+);
 
 // Body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true, limit: '10kb' }))
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection(Remove all '$' and '.' from query)
@@ -67,23 +71,25 @@ app.use(mongoSanitize());
 app.use(xss());
 
 // Prevent parameter pollution(Remove duplicate parameter excludes whitelist)
-app.use(hpp({
+app.use(
+  hpp({
     whitelist: [
-        'price',
-        'duration',
-        'difficulty',
-        'maxGroupSize',
-        'ratingsAverage',
-        'ratingsQuantity',
-    ]
-}))
+      'price',
+      'duration',
+      'difficulty',
+      'maxGroupSize',
+      'ratingsAverage',
+      'ratingsQuantity',
+    ],
+  }),
+);
 
 // Test middleware
 app.use((req, res, next) => {
-    req.requestTime = new Date().toISOString();
-    // console.log(req.cookies);
-    next();
-})
+  req.requestTime = new Date().toISOString();
+  // console.log(req.cookies);
+  next();
+});
 
 // 2) ROUTES
 app.use('/', viewRouter);
@@ -97,7 +103,5 @@ app.use('/api/v1/booking', bookingRouter);
 // })
 
 app.use(globalErrorHandeler);
-
-
 
 module.exports = app;
