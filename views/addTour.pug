@@ -1,0 +1,70 @@
+extends base
+
+block content 
+  main.main
+    .user-view
+      // Side menu bar
+      include _sideMenu     
+
+      .user-view__content
+        .add-tour__form-container
+          h2.heading-secondary.ma-bt-md Add new tour
+          form.form.form--create-tour
+            .form__group
+              label.form__label(for='name') Tour name
+              input#name.form__input(type='text', required, name='name')
+            .form__group
+              label.form__label(for='summary') Summary
+              input#summary.form__input(type='text', required, name='summary')
+            .form__group
+              label.form__label(for='description') Description 
+              textarea#description.form__input(name='description', rows='7')
+            .space-between
+              .form__group
+                label.form__label(for='duration') Duration
+                input#duration.form__input(type='text',  required, name='duration')
+              .form__group
+                label.form__label(for='maxGroupSize') Max group size
+                input#maxGroupSize.form__input(type='text', required, name='maxGroupSize')
+            .space-between
+              .form__group
+                label.form__label(for='price') Price
+                input#price.form__input(type='text', required, name='price')
+              .form__group
+                label.form__label(for='difficulty') Difficulty
+                select#difficulty.form__input(required, name='difficulty')
+                  option(value='') Select difficulty  
+                  option(value='easy') Easy  
+                  option(value='medium') Medium  
+                  option(value='difficult') Difficult 
+            .space-between 
+              .form__group
+                label.form__label(for='imageCover') Cover image
+                input#imageCover.form__input(type='file', accept='image/*', required, name='imageCover')
+              .form__group
+                label.form__label(for='images') Tour images(Should be 3)
+                input#images.form__input(type='file', accept='image/*', name='images', multiple) 
+            .tour-locations
+              label.form__label-heading Tour locations
+                
+              .locations
+                h1 Start location
+                .form__group
+                  label.form__label(for='place') Place
+                  input#place.form__input(type='text', required, name='place')
+                .space-between
+                  .form__group.wd-80
+                    label.form__label(for='day') Day
+                    input#day.form__input(type='text', required, name='day')
+                  .form__group.wd-80
+                    label.form__label(for='lat') Latitude
+                    input#lat.form__input(type='text', required, name='lat')
+                  .form__group.wd-80
+                    label.form__label(for='lng') Longitude
+                    input#lng.form__input(type='text', required, name='lng')
+            .form__group.space-between
+              button.form__label-heading.icon-black.btn--add-tour(type='button')
+                svg
+                  use(xlink:href=`img/icons.svg#icon-plus`) 
+                | Add location
+              button.btn.btn--large.btn--green.btn--create-tour Add Tour

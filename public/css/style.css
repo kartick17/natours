@@ -75,6 +75,10 @@ body {
   margin-bottom: 3.5rem !important;
 }
 
+.pd-lf-md {
+  padding-left: 2rem;
+}
+
 .right {
   text-align: right !important;
 }
@@ -249,9 +253,18 @@ body {
   background-color: #55c57a;
 }
 
+.btn--red {
+  background-color: #ff4949 !important;
+  color: #fff;
+}
+
+.btn--red::after {
+  background-color: #ff4949 !important;
+}
+
 .btn--small {
   padding: 1.25rem 3rem !important;
-  font-size: 1.4rem !important;
+  font-size: 2rem !important;
 }
 
 .btn--large {
@@ -1137,18 +1150,18 @@ body {
 }
 
 .side-nav svg {
-  height: 1.9rem;
-  width: 1.9rem;
+  height: 1.9rem !important;
+  width: 1.9rem !important;
   fill: #f7f7f7;
   margin-right: 2rem;
 }
 
-.side-nav-black svg {
+.icon-black svg {
   height: 2.3rem;
   width: 2.3rem;
-  margin-right: 0.5rem;
+  /* margin-right: 0.5rem; */
   margin-bottom: -0.4rem;
-  fill: #555 !important;
+  fill: #777 !important;
 }
 
 use {
@@ -1488,6 +1501,12 @@ use {
   padding: 0 4rem;
 }
 
+.manage-tour__form-container {
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+
+
 input::file-selector-button {
   font-weight: bold;
   background-color:#60da88;;
@@ -1512,4 +1531,80 @@ select {
 
 h1 {
   font-size: 1.8rem;
+}
+
+.search-input{
+  width: 30rem;
+}
+.pagination{
+  align-items: center;
+}
+.pagination>p{
+  font-size: 2rem;
+}
+.pagination-btn{
+  border: none;
+  background: #fff;
+  padding: 1rem;
+}
+.pagination-btn>img {
+  height: 2rem;
+  width: 1rem;
+}
+
+#tour-heading {
+ margin-bottom: 4rem;
+}
+
+.list-heading {
+  list-style-type: none;
+  background-color: #777;
+  color: #fff;
+  font-size: 2rem;
+  margin: 2rem 0 0;
+  padding: 1.5rem 2rem;
+}
+
+.grid__tour-heading {
+  display: grid;
+  grid-template-columns: .35fr 1.55fr .45fr .8fr 1.1fr .75fr;;
+  column-gap: 2rem;
+  align-items: center;
+}
+
+.grid__tour-list {
+  display: grid;
+  grid-template-columns: .15fr 2fr .6fr 1fr 1.2fr 1fr;
+  column-gap: 2rem;
+  align-items: center;
+}
+
+.grid__user-heading {
+  display: grid;
+  grid-template-columns: .35fr 1.45fr 1.65fr 1fr .75fr;
+  column-gap: 2rem;
+  align-items: center;
+  
+}
+
+.grid__user-list {
+  display: grid;
+  grid-template-columns: .35fr 1.5fr 1.7fr .75fr .7fr;
+  column-gap: 2rem;
+  align-items: center;
+  
+}
+
+.list-row {
+  font-size: 1.7rem;
+  border-bottom: 0.2rem solid #bbb;
+  padding: 1rem 2.4rem;
+}
+.list-row>img{
+  height: 4rem;
+  width: 4rem;
+}
+
+.img {
+  border-radius: 50%;
 }

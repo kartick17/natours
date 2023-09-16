@@ -6,6 +6,8 @@ export const bookTour = async (tourId) => {
     'pk_test_51NhCv2SDvLUZq2h78g1MrUsLp0DzlAWKoJ4ppcrbJ2jftU1fI2kSiHOB7dkbQu8EQZf1bxt1czV4Ah6AnFIqoa1900hMbHY8zF',
   );
 
+  console.log(window.location.href);
+
   try {
     // 1) Get checkout session from API
     const session = await axios(

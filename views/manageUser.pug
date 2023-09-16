@@ -9,7 +9,6 @@ block content
         .manage-tour__form-container
           #tour-heading.flex.space-between
             h1.heading-secondary TourList
-            a.btn.btn-small(href='/add-tour') Create a Tour
           //- list search & pagination
           .flex.space-between
             input.form__input.search-input(type='text' placeholder='Search...')
@@ -23,19 +22,17 @@ block content
                 svg
                   use(xlink:href=`img/icons.svg#icon-arrow-right`)
           //- list heading
-          ul.list-heading.grid__tour-heading
+          ul.list-heading.grid__user-heading
             li
             li Name
-            li Price
-            li Difficulty
-            li Start date
+            li Email
+            li Role
             li Action
           #list-container
-            each tour in tours
-              .list-row.grid__tour-list
-                img.img(src=`${tour.imageCover}` alt=`${tour.name}`)
-                span= tour.name
-                span= tour.price
-                span.overview-box__text= tour.difficulty
-                span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
-                button.btn-small.btn--red Delete
+            each user in users
+              .list-row.grid__user-list
+                img.img(src=`${user.photo}` alt=`${user.name}`)
+                span= user.name
+                span= user.email
+                span.overview-box__text= user.role
+                button.btn-small.btn--red Deactive

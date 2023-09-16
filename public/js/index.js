@@ -1,9 +1,8 @@
 import '@babel/polyfill';
-import { signup } from './signup';
 import { bookTour } from './stripe';
 import { showAlert } from './alert';
 import { displayMap } from './mapbox';
-import { login, logout } from './login';
+import { login, logout, signup } from './user';
 import { updateSettings } from './updateSettings';
 import { forgotPassword, resetPassword } from './resetPassword';
 import { createTour } from './tour';
