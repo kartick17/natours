@@ -8,26 +8,13 @@ block content
       .user-view__content
         .manage-tour__form-container
           #tour-heading.flex.space-between
-            h1.heading-secondary TourList
-          //- list search & pagination
-          .flex.space-between
-            input.form__input.search-input(type='text' placeholder='Search...')
-            .flex.pagination
-              p 1-200 of 500
-              button.pagination-btn.icon-black
-                svg
-                  use(xlink:href=`img/icons.svg#icon-arrow-left`)
-              p 1
-              button.pagination-btn.icon-black
-                svg
-                  use(xlink:href=`img/icons.svg#icon-arrow-right`)
+            h1.heading-secondary User List
           //- list heading
           ul.list-heading.grid__user-heading
             li
             li Name
             li Email
             li Role
-            li Action
           #list-container
             each user in users
               .list-row.grid__user-list
@@ -35,4 +22,3 @@ block content
                 span= user.name
                 span= user.email
                 span.overview-box__text= user.role
-                button.btn-small.btn--red Deactive

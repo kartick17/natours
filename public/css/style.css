@@ -1567,21 +1567,21 @@ h1 {
 
 .grid__tour-heading {
   display: grid;
-  grid-template-columns: .35fr 1.55fr .45fr .8fr 1.1fr .75fr;;
+  grid-template-columns: .35fr 1.8fr .85fr .8fr 1.2fr;
   column-gap: 2rem;
   align-items: center;
 }
 
 .grid__tour-list {
   display: grid;
-  grid-template-columns: .15fr 2fr .6fr 1fr 1.2fr 1fr;
+  grid-template-columns: .2fr 2fr .9fr .85fr 1.25fr;
   column-gap: 2rem;
   align-items: center;
 }
 
 .grid__user-heading {
   display: grid;
-  grid-template-columns: .35fr 1.45fr 1.65fr 1fr .75fr;
+  grid-template-columns: .4fr 1.75fr 1.95fr .9fr;
   column-gap: 2rem;
   align-items: center;
   
@@ -1589,7 +1589,7 @@ h1 {
 
 .grid__user-list {
   display: grid;
-  grid-template-columns: .35fr 1.5fr 1.7fr .75fr .7fr;
+  grid-template-columns: .35fr 1.5fr 1.7fr .75fr;
   column-gap: 2rem;
   align-items: center;
   

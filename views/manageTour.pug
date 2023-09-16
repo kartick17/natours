@@ -10,18 +10,6 @@ block content
           #tour-heading.flex.space-between
             h1.heading-secondary TourList
             a.btn.btn-small(href='/add-tour') Create a Tour
-          //- list search & pagination
-          .flex.space-between
-            input.form__input.search-input(type='text' placeholder='Search...')
-            .flex.pagination
-              p 1-200 of 500
-              button.pagination-btn.icon-black
-                svg
-                  use(xlink:href=`img/icons.svg#icon-arrow-left`)
-              p 1
-              button.pagination-btn.icon-black
-                svg
-                  use(xlink:href=`img/icons.svg#icon-arrow-right`)
           //- list heading
           ul.list-heading.grid__tour-heading
             li
@@ -29,7 +17,6 @@ block content
             li Price
             li Difficulty
             li Start date
-            li Action
           #list-container
             each tour in tours
               .list-row.grid__tour-list
@@ -38,4 +25,3 @@ block content
                 span= tour.price
                 span.overview-box__text= tour.difficulty
                 span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
-                button.btn-small.btn--red Delete
