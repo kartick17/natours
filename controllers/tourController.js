@@ -11,11 +11,13 @@ exports.uploadTourPhoto = upload.fields([
 ]);
 
 exports.addTourPhoto = (req, res, next) => {
-  req.body.imageCover = req.files.imageCover[0].location;
+  req.body.imageCover = req.files.imageCover[0].transforms[0].location;
 
   req.body.images = [];
   if (req.files && req.files.images)
-    req.files.images.forEach((img) => req.body.images.push(img.location));
+    req.files.images.forEach((img) =>
+      req.body.images.push(img.transforms[0].location),
+    );
 
   next();
 };
