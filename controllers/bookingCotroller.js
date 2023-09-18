@@ -4,18 +4,27 @@ const User = require('../models/userModel');
 const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
+const { s3Config } = require('../config/awsS3');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the currently booked tour
   const tour = await Tour.findById(req.params.tourId);
   // console.log(tour);
 
+  // Allow stripe to access AWS S3 bucket image
+  // const params = {
+  //   Bucket: process.env.AWS_BUCKET_NAME,
+  //   Key: tour.imageCover, // The path to the image in your S3 bucket
+  //   Expires: 60 * 10,
+  // };
+
+  // console.log(s3Config);
+
+  // const imageUrl = s3Config.getSignedUrl('getObject', params);
+
   // 2) Create checkout session
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
-    // success_url: `${req.protocol}://${req.get('host')}/my-tours/?tour=${
-    //   req.params.tourId
-    // }&user=${req.user.id}&price=${tour.price}`,
     success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
     cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
     customer_email: req.user.email,
@@ -27,7 +36,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: `${tour.summary}`,
-            images: [`${tour.imageCover}`],
+            images: [
+              `https://static.vecteezy.com/system/resources/thumbnails/008/559/332/small/pay-now-text-button-web-button-banner-template-pay-now-vector.jpg`,
+            ],
           },
           unit_amount: tour.price * 100,
         },

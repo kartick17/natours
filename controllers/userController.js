@@ -1,4 +1,4 @@
-const upload = require('../config/awsS3');
+const { upload } = require('../config/awsS3');
 const factory = require('./handlerFactory');
 const AppError = require('../utils/appError');
 const User = require('./../models/userModel');
