@@ -8,7 +8,7 @@ block content
       .user-view__content
         .manage-tour__form-container
           #tour-heading.flex.space-between
-            h1.heading-secondary TourList
+            h1.heading-secondary Tour List
             a.btn.btn-small(href='/add-tour') Create a Tour
           //- list heading
           ul.list-heading.grid__tour-heading
@@ -19,7 +19,7 @@ block content
             li Start date
           #list-container
             each tour in tours
-              .list-row.grid__tour-list
+              .tour--list-row.list-row.grid__tour-list
                 img.img(src=`${tour.imageCover}` alt=`${tour.name}`)
                 span= tour.name
                 span= tour.price

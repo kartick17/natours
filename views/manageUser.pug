@@ -17,7 +17,7 @@ block content
             li Role
           #list-container
             each user in users
-              .list-row.grid__user-list
+              .user--list-row.list-row.grid__user-list
                 img.img(src=`${user.photo}` alt=`${user.name}`)
                 span= user.name
                 span= user.email

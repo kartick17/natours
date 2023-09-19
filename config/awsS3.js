@@ -64,7 +64,7 @@ const multerS3Config = multerS3({
 const upload = multer({
   storage: multerS3Config,
   limits: {
-    fileSize: 1024 * 1024 * 1, // we are allowing only 1 MB files
+    fileSize: 1024 * 1024 * 3, // we are allowing only 1 MB files
   },
 });
 

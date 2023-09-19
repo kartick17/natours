@@ -1571,7 +1571,7 @@ h1 {
 
 .grid__tour-heading {
   display: grid;
-  grid-template-columns: .35fr 1.8fr .85fr .8fr 1.2fr;
+  grid-template-columns: .4fr 1.85fr .75fr .8fr 1.2fr;
   column-gap: 2rem;
   align-items: center;
 }
@@ -1604,11 +1604,18 @@ h1 {
   border-bottom: 0.2rem solid #bbb;
   padding: 1rem 2.4rem;
 }
-.list-row>img{
+
+.user--list-row>img{
   height: 4rem;
   width: 4rem;
+  border-radius: 50%;
+}
+
+.tour--list-row>img{
+  height: 4rem;
+  width: 6rem;
+  border-radius: 5%;
 }
 
 .img {
-  border-radius: 50%;
 }
