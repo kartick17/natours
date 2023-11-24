@@ -131,11 +131,13 @@ body {
   font-size: 2.25rem;
   text-transform: uppercase;
   font-weight: 700;
-  background-image: -webkit-gradient(linear,
-      left top,
-      right top,
-      from(#7dd56f),
-      to(#28b487));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#7dd56f),
+    to(#28b487)
+  );
   background-image: linear-gradient(to right, #7dd56f, #28b487);
   -webkit-background-clip: text;
   background-clip: text;
@@ -146,11 +148,13 @@ body {
 }
 
 .heading-secondary--error {
-  background-image: -webkit-gradient(linear,
-      left top,
-      right top,
-      from(#ff7730),
-      to(#eb4d4b));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#ff7730),
+    to(#eb4d4b)
+  );
   background-image: linear-gradient(to right, #ff7730, #eb4d4b);
   font-size: 3.5rem;
 }
@@ -168,14 +172,18 @@ body {
   line-height: 1;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  background-image: -webkit-gradient(linear,
-      left top,
-      right bottom,
-      from(rgba(125, 213, 111, 0.85)),
-      to(rgba(40, 180, 135, 0.85)));
-  background-image: linear-gradient(to bottom right,
-      rgba(125, 213, 111, 0.85),
-      rgba(40, 180, 135, 0.85));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(rgba(125, 213, 111, 0.85)),
+    to(rgba(40, 180, 135, 0.85))
+  );
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(125, 213, 111, 0.85),
+    rgba(40, 180, 135, 0.85)
+  );
 }
 
 .heading-primary {
@@ -364,6 +372,17 @@ body {
 .header__logo img {
   height: 3.5rem;
 }
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.header__logo > h1 {
+  font-size: 3rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #f7f7f7;
+}
 
 @media only screen and (max-width: 62.5em) {
   .header__logo {
@@ -377,14 +396,18 @@ body {
 .section-header {
   position: relative;
   height: 38vw;
-  clip-path: polygon(0 0,
-      100% 0,
-      100% calc(100% - var(--section-rotate)),
-      0 100%);
-  -webkit-clip-path: polygon(0 0,
-      100% 0,
-      100% calc(100% - var(--section-rotate)),
-      0 100%);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
+  -webkit-clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
 }
 
 .header__hero {
@@ -404,11 +427,13 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: -webkit-gradient(linear,
-      left top,
-      right bottom,
-      from(#7dd56f),
-      to(#28b487));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   opacity: 0.85;
 }
@@ -473,7 +498,7 @@ body {
   display: flex;
 }
 
-.section-description>* {
+.section-description > * {
   padding: 0 8vw;
   padding-top: 14vw;
   padding-bottom: calc(1vw + var(--section-rotate));
@@ -554,14 +579,18 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  clip-path: polygon(0 var(--section-rotate),
-      100% 0,
-      100% calc(100% - var(--section-rotate)),
-      0 100%);
-  -webkit-clip-path: polygon(0 var(--section-rotate),
-      100% 0,
-      100% calc(100% - var(--section-rotate)),
-      0 100%);
+  clip-path: polygon(
+    0 var(--section-rotate),
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
+  -webkit-clip-path: polygon(
+    0 var(--section-rotate),
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
   margin-top: calc(0px - var(--section-rotate));
   position: relative;
   z-index: 1000;
@@ -626,20 +655,26 @@ body {
   padding: calc(5rem + var(--section-rotate)) 0;
   position: relative;
   z-index: 1000;
-  background: -webkit-gradient(linear,
-      left top,
-      right bottom,
-      from(#7dd56f),
-      to(#28b487));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
   background: linear-gradient(to right bottom, #7dd56f, #28b487);
-  clip-path: polygon(0 var(--section-rotate),
-      100% 0,
-      100% calc(100% - var(--section-rotate)),
-      0 100%);
-  -webkit-clip-path: polygon(0 var(--section-rotate),
-      100% 0,
-      100% calc(100% - var(--section-rotate)),
-      0 100%);
+  clip-path: polygon(
+    0 var(--section-rotate),
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
+  -webkit-clip-path: polygon(
+    0 var(--section-rotate),
+    100% 0,
+    100% calc(100% - var(--section-rotate)),
+    0 100%
+  );
 }
 
 .reviews {
@@ -770,11 +805,13 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  background: -webkit-gradient(linear,
-      left top,
-      right bottom,
-      from(#7dd56f),
-      to(#28b487));
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
   background: linear-gradient(to right bottom, #7dd56f, #28b487);
   z-index: 10;
   -webkit-transform: translate(-35%, -50%);
@@ -831,11 +868,13 @@ body {
   -webkit-box-flex: 32rem;
   -ms-flex: 32rem 0 0px;
   flex: 32rem 0 0;
-  background-image: -webkit-gradient(linear,
-      left top,
-      right bottom,
-      from(#7dd56f),
-      to(#28b487));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   padding: 4rem 0;
 }
@@ -1225,11 +1264,13 @@ use {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: -webkit-gradient(linear,
-      left top,
-      right bottom,
-      from(#7dd56f),
-      to(#28b487));
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right bottom,
+    from(#7dd56f),
+    to(#28b487)
+  );
   background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   opacity: 0.7;
 }
@@ -1446,12 +1487,12 @@ use {
   z-index: -1;
 }
 
-.form__upload:focus+label {
+.form__upload:focus + label {
   outline: 3px solid #55c57a;
   outline-offset: 3px;
 }
 
-.form__upload+label {
+.form__upload + label {
   color: #55c57a;
   display: inline-block;
   text-decoration: none;
@@ -1462,7 +1503,7 @@ use {
   cursor: pointer;
 }
 
-.form__upload+label:hover {
+.form__upload + label:hover {
   background-color: #55c57a;
   color: #fff;
   -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
@@ -1510,17 +1551,16 @@ use {
   padding: 0 4rem;
 }
 
-
 input::file-selector-button {
   font-weight: bold;
-  background-color:#60da88;;
+  background-color: #60da88;
   color: #fff;
   padding: 0.5em;
   border: none;
   border-radius: 3px;
 }
 
-input[type="file"] {
+input[type='file'] {
   padding: 1rem;
   width: 23.6rem;
 }
@@ -1537,27 +1577,27 @@ h1 {
   font-size: 1.8rem;
 }
 
-.search-input{
+.search-input {
   width: 30rem;
 }
-.pagination{
+.pagination {
   align-items: center;
 }
-.pagination>p{
+.pagination > p {
   font-size: 2rem;
 }
-.pagination-btn{
+.pagination-btn {
   border: none;
   background: #fff;
   padding: 1rem;
 }
-.pagination-btn>img {
+.pagination-btn > img {
   height: 2rem;
   width: 1rem;
 }
 
 #tour-heading {
- margin-bottom: 4rem;
+  margin-bottom: 4rem;
 }
 
 .list-heading {
@@ -1571,32 +1611,30 @@ h1 {
 
 .grid__tour-heading {
   display: grid;
-  grid-template-columns: .4fr 1.85fr .75fr .8fr 1.2fr;
+  grid-template-columns: 0.4fr 1.85fr 0.75fr 0.8fr 1.2fr;
   column-gap: 2rem;
   align-items: center;
 }
 
 .grid__tour-list {
   display: grid;
-  grid-template-columns: .2fr 2fr .9fr .85fr 1.25fr;
+  grid-template-columns: 0.2fr 2fr 0.9fr 0.85fr 1.25fr;
   column-gap: 2rem;
   align-items: center;
 }
 
 .grid__user-heading {
   display: grid;
-  grid-template-columns: .4fr 1.75fr 1.95fr .9fr;
+  grid-template-columns: 0.4fr 1.75fr 1.95fr 0.9fr;
   column-gap: 2rem;
   align-items: center;
-  
 }
 
 .grid__user-list {
   display: grid;
-  grid-template-columns: .35fr 1.5fr 1.7fr .75fr;
+  grid-template-columns: 0.35fr 1.5fr 1.7fr 0.75fr;
   column-gap: 2rem;
   align-items: center;
-  
 }
 
 .list-row {
@@ -1605,13 +1643,13 @@ h1 {
   padding: 1rem 2.4rem;
 }
 
-.user--list-row>img{
+.user--list-row > img {
   height: 4rem;
   width: 4rem;
   border-radius: 50%;
 }
 
-.tour--list-row>img{
+.tour--list-row > img {
   height: 4rem;
   width: 6rem;
   border-radius: 5%;
